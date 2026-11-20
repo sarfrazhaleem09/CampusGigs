@@ -9,6 +9,10 @@ import jobRoutes from "./routes/jobs.js";
 import applicationRoutes from "./routes/applications.js";
 import messageRoutes from "./routes/messages.js";
 const app = express();
+app.use((req, res, next) => {
+  console.log("Incoming request:", req.method, req.originalUrl);
+  next();
+});
 app.use(helmet());
 app.use(
   cors({
@@ -59,6 +63,7 @@ try {
   }
 
   await mongoose.connect(process.env.MONGODB_URI);
+  console.log("MongoDB Atlas connected successfully");
   app.listen(port, () =>
     console.log(`CampusGigs API running on http://localhost:${port}`),
   );
