@@ -11,6 +11,11 @@ import messageRoutes from "./routes/messages.js";
 const app = express();
 app.use((req, res, next) => {
   console.log("Incoming request:", req.method, req.originalUrl);
+
+  res.on("finish", () => {
+    console.log("Response:", req.method, req.originalUrl, res.statusCode);
+  });
+
   next();
 });
 app.use(helmet());
